@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import filedialog, scrolledtext, ttk
 from pathlib import Path
 
-from extractor import extract_images_from_pptx
+from src.extractor import extract_images_from_pptx
 
 
 class App(tk.Tk):
@@ -88,23 +88,9 @@ class App(tk.Tk):
         thread.start()
 
     def _extract(self, pptx_path: str, output_dir: str):
-        import io
         import sys
 
         start = time.time()
-
-        # print 출력을 가로채서 로그에 표시
-        class LogRedirector(io.StringIO):
-            def __init__(self, callback):
-                super().__init__()
-                self.callback = callback
-
-            def write(self, msg):
-                if msg.strip():
-                    self.after_idle_log(msg.strip())
-
-            def after_idle_log(self, msg):
-                pass
 
         # print 출력 리다이렉트
         original_stdout = sys.stdout

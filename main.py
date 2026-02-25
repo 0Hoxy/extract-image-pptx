@@ -2,7 +2,7 @@ import argparse
 import sys
 import time
 
-from extractor import extract_images_from_pptx
+from src.extractor import extract_images_from_pptx
 
 
 def main():
