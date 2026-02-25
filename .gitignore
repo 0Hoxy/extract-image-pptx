@@ -1,0 +1,8 @@
+venv/
+output/
+dist/
+build/
+__pycache__/
+*.spec
+*.pptx
+*.egg-info/

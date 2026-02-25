@@ -1,0 +1,38 @@
+name: Windows exe 빌드
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 의존성 설치
+        run: |
+          pip install -r requirements.txt
+          pip install pyinstaller
+
+      - name: exe 빌드
+        run: pyinstaller build.spec
+
+      - name: 빌드 결과 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: PPTX_이미지_추출기_Windows
+          path: dist/PPTX_이미지_추출기.exe
+
+      - name: Release 업로드
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/PPTX_이미지_추출기.exe
